@@ -196,7 +196,7 @@ export function LandingPage() {
       <footer className="border-t border-[var(--border)]">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 py-8 text-sm text-[var(--text-muted)] sm:flex-row sm:px-8">
           <Logo />
-          <p>© 2023-{new Date().getFullYear()} Resumatch</p>
+          <p>© 2023-{new Date().getFullYear()} ResumeAnalyzer</p>
           <div className="flex gap-4">
             <Link to="/jobs" className="transition-colors hover:text-[var(--text)]">
               Jobs
