@@ -1,8 +1,3 @@
-databases:
-  - name: resumatch-db
-    plan: free
-    databaseName: resumatch
-
 services:
   - type: web
     name: resumatch-api
@@ -23,14 +18,13 @@ services:
         generateValue: true
       - key: DEBUG
         value: "False"
+      # Paste your Supabase connection string here (Session mode, port 5432).
       - key: DATABASE_URL
-        fromDatabase:
-          name: resumatch-db
-          property: connectionString
-      # Set to the deployed frontend origin once it exists.
+        sync: false
+      # Set to your Cloudflare Pages URL after frontend is deployed.
       - key: CORS_ALLOWED_ORIGINS
         sync: false
-      # Resume files must go to object storage: the disk is ephemeral.
+      # Supabase Storage (S3-compatible).
       - key: USE_S3
         value: "True"
       - key: AWS_STORAGE_BUCKET_NAME
@@ -40,4 +34,6 @@ services:
       - key: AWS_SECRET_ACCESS_KEY
         sync: false
       - key: AWS_S3_ENDPOINT_URL
+        sync: false
+      - key: AWS_S3_REGION_NAME
         sync: false
