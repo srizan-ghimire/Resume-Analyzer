@@ -12,9 +12,9 @@ const button = cva(
     variants: {
       variant: {
         primary:
-          "bg-[var(--accent)] text-[var(--accent-contrast)] hover:opacity-90 active:opacity-80",
+          "bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] hover:bg-[var(--btn-primary-hover)] active:opacity-90",
         secondary:
-          "bg-[var(--surface-raised)] text-[var(--text)] border border-[var(--border-strong)] " +
+          "bg-[var(--surface-raised)] text-[var(--text)] border border-[var(--border)] " +
           "hover:bg-[var(--surface-sunken)]",
         ghost:
           "text-[var(--text-muted)] hover:bg-[var(--surface-sunken)] hover:text-[var(--text)]",
