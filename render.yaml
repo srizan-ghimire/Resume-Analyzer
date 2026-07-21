@@ -11,10 +11,10 @@ services:
     buildCommand: |
       pip install -r requirements.txt
       python backend/manage.py collectstatic --noinput
+      python backend/manage.py migrate --noinput
     startCommand: >
       gunicorn backend.wsgi:application --chdir backend
       --workers 3 --timeout 120 --bind 0.0.0.0:$PORT
-    preDeployCommand: python backend/manage.py migrate --noinput
     healthCheckPath: /api/v1/health/
     envVars:
       - key: PYTHON_VERSION
@@ -41,21 +41,3 @@ services:
         sync: false
       - key: AWS_S3_ENDPOINT_URL
         sync: false
-
-  - type: cron
-    name: resumatch-close-expired-jobs
-    runtime: python
-    plan: free
-    schedule: "0 * * * *"
-    buildCommand: pip install -r requirements.txt
-    startCommand: python backend/manage.py deactivate_expired_jobs
-    envVars:
-      - key: SECRET_KEY
-        fromService:
-          name: resumatch-api
-          type: web
-          envVarKey: SECRET_KEY
-      - key: DATABASE_URL
-        fromDatabase:
-          name: resumatch-db
-          property: connectionString
