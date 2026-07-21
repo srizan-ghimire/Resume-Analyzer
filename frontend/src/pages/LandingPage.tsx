@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "@/app/AuthProvider";
-import { ThemeToggle } from "@/app/ThemeProvider";
 import { usePageTitle } from "@/app/usePageTitle";
 import { Logo } from "@/components/layout/Logo";
 import { Button } from "@/components/ui/Button";
@@ -36,101 +34,14 @@ const STEPS = [
 export function LandingPage() {
   usePageTitle();
   const { isAuthenticated, user } = useAuth();
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const homeHref = user?.role === "RECRUITER" ? "/recruiter/jobs" : "/jobs";
 
   return (
-    <div className="min-h-dvh bg-[var(--surface)]">
+    <div className="min-h-dvh bg-[var(--surface)] bg-pattern-dots">
       <a href="#main" className="sr-only-focusable">
         Skip to main content
       </a>
-
-      <header className="sticky top-0 z-30 border-b bg-[var(--surface)]/85 backdrop-blur">
-        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
-          <Link to="/" className="rounded-lg">
-            <Logo />
-          </Link>
-
-          <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 sm:flex">
-            <a
-              href="#features"
-              className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
-            >
-              Features
-            </a>
-            <a
-              href="#how"
-              className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
-            >
-              How it works
-            </a>
-            <ThemeToggle />
-            {isAuthenticated ? (
-              <Button asChild size="sm" className="ml-2">
-                <Link to={homeHref}>Open app</Link>
-              </Button>
-            ) : (
-              <>
-                <Button asChild variant="ghost" size="sm">
-                  <Link to="/login">Sign in</Link>
-                </Button>
-                <Button asChild size="sm">
-                  <Link to="/register">Get started</Link>
-                </Button>
-              </>
-            )}
-          </nav>
-
-          {/* The old header hid its links at <md with no replacement. */}
-          <div className="ml-auto flex items-center gap-1 sm:hidden">
-            <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setMenuOpen((open) => !open)}
-              aria-expanded={menuOpen}
-              aria-controls="landing-menu"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                {menuOpen ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
-              </svg>
-            </Button>
-          </div>
-        </div>
-
-        <div
-          id="landing-menu"
-          hidden={!menuOpen}
-          className="border-t px-4 py-3 sm:hidden"
-        >
-          <nav aria-label="Primary" className="flex flex-col gap-1">
-            <a href="#features" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)]">
-              Features
-            </a>
-            <a href="#how" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)]">
-              How it works
-            </a>
-            <div className="mt-2 flex flex-col gap-2">
-              {isAuthenticated ? (
-                <Button asChild>
-                  <Link to={homeHref}>Open app</Link>
-                </Button>
-              ) : (
-                <>
-                  <Button asChild variant="secondary">
-                    <Link to="/login">Sign in</Link>
-                  </Button>
-                  <Button asChild>
-                    <Link to="/register">Get started</Link>
-                  </Button>
-                </>
-              )}
-            </div>
-          </nav>
-        </div>
-      </header>
 
       <main id="main">
         <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">

@@ -6,13 +6,11 @@ import { z } from "zod";
 import { ApiError } from "@/api/client";
 import { auth } from "@/api/endpoints";
 import { useAuth } from "@/app/AuthProvider";
-import { useTheme } from "@/app/ThemeProvider";
 import { usePageTitle } from "@/app/usePageTitle";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, PasswordInput } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/Toast";
-import { cn } from "@/lib/utils";
 
 const profileSchema = z.object({
   first_name: z.string().trim().min(1, "Enter your first name"),
@@ -47,7 +45,6 @@ export function SettingsPage() {
           onSaved={refreshUser}
         />
         <PasswordCard />
-        <AppearanceCard />
       </div>
     </div>
   );
@@ -245,38 +242,3 @@ function PasswordCard() {
   );
 }
 
-function AppearanceCard() {
-  const { theme, setTheme } = useTheme();
-  const options = [
-    ["light", "Light"],
-    ["dark", "Dark"],
-    ["system", "System"],
-  ] as const;
-
-  return (
-    <section className="surface-card p-6">
-      <h2 className="text-lg font-semibold">Appearance</h2>
-      <fieldset className="mt-4">
-        <legend className="sr-only-focusable">Theme</legend>
-        <div className="flex flex-wrap gap-2">
-          {options.map(([value, label]) => (
-            <button
-              key={value}
-              type="button"
-              onClick={() => setTheme(value)}
-              aria-pressed={theme === value}
-              className={cn(
-                "rounded-lg border px-4 py-2 text-sm font-medium transition-colors",
-                theme === value
-                  ? "border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)]"
-                  : "hover:bg-[var(--surface-sunken)]",
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-    </section>
-  );
-}

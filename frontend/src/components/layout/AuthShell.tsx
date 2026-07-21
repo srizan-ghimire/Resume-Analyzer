@@ -1,8 +1,4 @@
 import type * as React from "react";
-import { Link } from "react-router-dom";
-
-import { Logo } from "./Logo";
-import { ThemeToggle } from "@/app/ThemeProvider";
 
 /**
  * Two-column shell for login and register.
@@ -22,15 +18,8 @@ export function AuthShell({
   footer: React.ReactNode;
 }) {
   return (
-    <div className="grid min-h-dvh lg:grid-cols-2">
+    <div className="grid min-h-dvh bg-pattern-dots lg:grid-cols-2">
       <div className="flex flex-col px-5 py-6 sm:px-8">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="rounded-lg">
-            <Logo />
-          </Link>
-          <ThemeToggle />
-        </div>
-
         <main className="mx-auto flex w-full max-w-sm flex-1 flex-col justify-center py-10">
           <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
           <p className="mt-2 text-sm text-[var(--text-muted)]">{subtitle}</p>

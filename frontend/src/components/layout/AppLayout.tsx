@@ -3,7 +3,6 @@ import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-do
 
 import { Logo } from "./Logo";
 import { useAuth } from "@/app/AuthProvider";
-import { ThemeToggle } from "@/app/ThemeProvider";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -43,7 +42,10 @@ export function AppLayout() {
   React.useEffect(() => setMobileOpen(false), [location.pathname]);
 
   return (
-    <div className="min-h-dvh bg-[var(--surface)]">
+    <div className={cn(
+      "min-h-dvh bg-[var(--surface)]",
+      isRecruiter ? "bg-pattern-divide" : "bg-pattern-plus"
+    )}>
       <a href="#main" className="sr-only-focusable">
         Skip to main content
       </a>
@@ -61,36 +63,22 @@ export function AppLayout() {
         <SidebarFooter user={user} onLogout={logout} />
       </aside>
 
+      {/* Floating mobile menu trigger for accessibility since top navbar is removed */}
+      <div className="fixed bottom-4 right-4 z-40 lg:hidden">
+        <Button
+          variant="primary"
+          size="icon"
+          className="h-12 w-12 rounded-full shadow-lg"
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open navigation menu"
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+        >
+          <IconMenu />
+        </Button>
+      </div>
+
       <div className="lg:pl-64">
-        <header className="sticky top-0 z-20 flex h-16 items-center gap-3 border-b bg-[var(--surface-raised)]/85 px-4 backdrop-blur sm:px-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open navigation menu"
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav"
-          >
-            <IconMenu />
-          </Button>
-
-          <Link to="/" className="rounded-lg lg:hidden">
-            <Logo showWordmark={false} />
-          </Link>
-
-          <div className="ml-auto flex items-center gap-1">
-            <ThemeToggle />
-            <Link
-              to="/settings"
-              className="rounded-lg p-2 text-[var(--text-muted)] hover:bg-[var(--surface-sunken)] hover:text-[var(--text)]"
-              aria-label="Account settings"
-            >
-              <IconUser />
-            </Link>
-          </div>
-        </header>
-
         <main id="main" className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
           <Outlet />
         </main>
@@ -295,15 +283,6 @@ function IconMenu() {
   return (
     <svg {...svgProps()}>
       <path d="M3 6h18M3 12h18M3 18h18" />
-    </svg>
-  );
-}
-
-function IconUser() {
-  return (
-    <svg {...svgProps()}>
-      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-      <circle cx="12" cy="7" r="4" />
     </svg>
   );
 }
