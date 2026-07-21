@@ -29,8 +29,8 @@ Agile,Agile Methodology
 Agroecology,
 Agronomy,
 AI Ethics,AIEthics
-AI Ops,AIOps
 Aikido,
+AIOps,AI Ops
 Air Quality Control,AirQualityControl
 Alice,
 Allegro Graph,AllegroGraph
@@ -38,6 +38,7 @@ Alpine,
 Amazon Web Services,AWS
 AMPL,
 Analysis,
+Android,Android Development
 Angular,Angular.js|AngularJS
 Animal Training,AnimalTraining
 Animation,
@@ -47,14 +48,14 @@ Ant Design,AntDesign
 Antenna Design,AntennaDesign
 Anthropology,
 Antiquing,
-AP Igateway,APIgateway
-AP Isecurity,APIsecurity
 Apache,
 Apache Airflow,Airflow
 Apache Kafka,Kafka
 Apache Spark,PySpark|Spark
+API Gateway,AP Igateway|APIgateway
 API Integration,APIIntegration
 API Management,APIManagement
+API Security,AP Isecurity|APIsecurity
 Apiculture,
 APL,
 Apollo,
@@ -75,7 +76,7 @@ Aromatherapy,
 Art Therapy,ArtTherapy
 Artificial Intelligence,AI|ArtificialIntelligence
 ASIC Development,ASICDevelopment
-Assert J,AssertJ
+AssertJ,Assert J
 Astro,
 Astrobiology,
 Astrochemistry,
@@ -87,7 +88,7 @@ Auditing,
 Augmented Reality,AugmentedReality
 Aurelia,
 Auto Hotkey,AutoHotkey
-Auto It,AutoIt
+AutoIt,Auto It
 Automation,
 Automation Scripting,AutomationScripting
 Automotive,
@@ -179,6 +180,7 @@ Cassandra,
 Catalyst,
 Cayley,
 CCPA Compliance,CCPACompliance
+Celery,
 Ceramic Engineering,CeramicEngineering
 Ceramics,
 Chai,
@@ -189,11 +191,11 @@ Chapel,
 Chat Ops,ChatOps
 Chatbots,
 Chef,
-Cherry Py,CherryPy
+CherryPy,Cherry Py
 Chiropractic,
 Choreography,
 Choria,
-Chuc K,ChucK
+ChucK,Chuc K
 CI/CD,CI CD|CICD|Continuous Delivery|Continuous Integration
 Circle CI,CircleCI
 Circuit Breaker,CircuitBreaker
@@ -299,7 +301,7 @@ Data Pipeline,DataPipeline
 Data Quality,DataQuality
 Data Residency,DataResidency
 Data Sovereignty,DataSovereignty
-Data Visualization,DataVisualization
+Data Visualization,Data Visualisation|DataVisualization
 Data Warehousing,Data Warehouse|DataWarehousing
 Database Management,DatabaseManagement
 Databricks,
@@ -315,6 +317,7 @@ Demography,
 Dependency Management,DependencyManagement
 Derby,
 Design,
+Design Systems,Design System
 Detox,
 Dev Sec Ops,DevSecOps
 DevOps,
@@ -354,7 +357,7 @@ Drupal,
 Dylan,
 Dynamo DB,DynamoDB
 DynamoDB,
-E Learning Development,ELearningDevelopment
+E-Learning Development,E Learning Development|ELearningDevelopment
 Earl Grey,EarlGrey
 Earthquake Engineering,EarthquakeEngineering
 Easy Mock,EasyMock
@@ -383,6 +386,7 @@ Ember,
 Embroidery,
 Enameling,
 Encaustic Art,EncausticArt
+End-to-End Testing,E2E Testing
 Energy Storage,EnergyStorage
 Engineering,
 Engineering Economics,EngineeringEconomics
@@ -395,7 +399,7 @@ Epidemiology,
 EPL,
 Equestrianism,
 Erlang,
-ES Build,ESBuild
+esbuild,ES Build
 Eslint,
 Espresso,
 Ethical Hacking,EthicalHacking
@@ -405,12 +409,12 @@ Ethnography,
 Ethnomusicology,
 ETL,Extract Transform Load
 Event Planning,EventPlanning
+Excel,MS Excel|Microsoft Excel|Spreadsheets
 Exobiology,
 Exoplanetology,
 Expect,
 Express,
 Express.js,Express|ExpressJS
-F Script,FScript
 F#,
 Fact Checking,FactChecking
 Failover Clustering,FailoverClustering
@@ -462,6 +466,7 @@ Fox,
 Fox Pro,FoxPro
 Freediving,
 Frontend Development,FrontendDevelopment
+FScript,F Script
 Fuel PHP,FuelPHP
 Full Stack,FullStack
 Game Design,GameDesign
@@ -470,8 +475,8 @@ GAMS,
 Gardening,
 Gatsby,
 Gauge,
-GD Script,GDScript
 GDPR Compliance,GDPRCompliance
+GDScript,GD Script
 Gene Editing,GeneEditing
 Genealogy,
 Genie,
@@ -497,6 +502,7 @@ Goji,
 Goldsmithing,
 Gollum,
 Google Cloud Platform,GCP|Google Cloud
+Google Sheets,
 Gorilla,
 GORM,
 Gotham,
@@ -504,11 +510,11 @@ Gqlgen,
 Grafana,
 Grails,
 Grant Writing,GrantWriting
-Graph Q Lite,GraphQLite
-Graph QL Yoga,GraphQLYoga
 Graphene,
 Graphic Design,GraphicDesign
 GraphQL,
+GraphQL Yoga,Graph QL Yoga|GraphQLYoga
+GraphQLite,Graph Q Lite
 Grav,
 Green Chemistry,GreenChemistry
 Green IT,GreenIT
@@ -558,7 +564,6 @@ Hyperconvergence,
 Hypercorn,
 Hypnotherapy,
 Hypothesis,
-Ia C,IaC
 Ice Sculpting,IceSculpting
 Ichthyology,
 Icon,
@@ -570,23 +575,22 @@ Incident Response,IncidentResponse
 Industrial Automation,IndustrialAutomation
 Industrial Robotics,IndustrialRobotics
 Inferno,
+Infrastructure as Code,Ia C|IaC
 Instructional Design,InstructionalDesign
 Intarsia,
 Integration Testing,
 Intent Based,IntentBased
 Interactive Design,InteractiveDesign
 Io,
-Io T Development,IoTDevelopment
-Io T Integration,IoTIntegration
 Ionic,
+iOS,iOS Development
+IoT Development,Io T Development|IoTDevelopment
+IoT Integration,Io T Integration|IoTIntegration
 Iris,
 Iron,
 IT Audit,ITAudit
 ITIL,
 ITSM,
-J Hipster,JHipster
-J Script,JScript
-J Unit,JUnit
 JAL,
 Janus Graph,JanusGraph
 Jasmine,
@@ -603,14 +607,17 @@ Jetpack,
 Jetpack Compose,
 Jetty,
 Jewelry Making,JewelryMaking
+JHipster,J Hipster
 Jira,
 Jiu Jitsu,JiuJitsu
 Joomla,
 Joy,
 JPA,
 JQ,
+JScript,J Script
 Juggling,
 Julia,
+JUnit,J Unit
 Jupyter,Jupyter Notebook|JupyterLab
 JWT,JSON Web Token
 Kanban,
@@ -660,6 +667,7 @@ Lit,
 Live Script,LiveScript
 Live View,LiveView
 Load Balancing,LoadBalancing
+Load Testing,Performance Testing
 Localization,
 Locksmithing,
 Log Analysis,LogAnalysis
@@ -692,7 +700,7 @@ Materials Characterization,MaterialsCharacterization
 MATLAB,
 Matplotlib,
 MAUI,
-MAX Script,MAXScript
+MAXScript,MAX Script
 Mechatronic Control,MechatronicControl
 Mechatronics,
 Mechatronics Design,MechatronicsDesign
@@ -715,12 +723,13 @@ Microelectronics,
 Micronaut,
 Microservices,Microservice
 Microsoft Azure,Azure
+Microsoft Word,MS Word
 Middleware,
 Mithril,
 Mixology,
-Mk Docs,MkDocs
+MkDocs,Mk Docs
 ML,
-ML Ops,MLOps
+MLOps,ML Ops
 Mobile Development,MobileDevelopment
 Mocha,
 Mockito,
@@ -745,7 +754,7 @@ Museum Curation,MuseumCuration
 Mushroom Cultivation,MushroomCultivation
 Mushroom Hunting,MushroomHunting
 Music Therapy,MusicTherapy
-My Batis,MyBatis
+MyBatis,My Batis
 Mycology,
 Mycotecture,
 MySQL,
@@ -769,7 +778,7 @@ Net Logo,NetLogo
 Network Architecture,NetworkArchitecture
 Network Automation,NetworkAutomation
 Network Slicing,NetworkSlicing
-Networking,
+Networking,Computer Networking
 Neuroprosthetics,
 Next,
 Next.js,Next js|NextJS
@@ -779,7 +788,7 @@ Nickel,
 Nightwatch,
 Nim,
 NIST,
-No Code,NoCode
+No-Code,No Code|NoCode
 Node.js,Node|NodeJS
 Nomad,
 Non Destructive Testing,NonDestructiveTesting
@@ -794,12 +803,12 @@ Nutrition,
 Nuxt,
 Nuxt.js,
 NXC,
-O Caml,OCaml
 OAuth,OAuth 2.0|OAuth2
 Oberon,
 Objection,
-Objective C,ObjectiveC
+Objective-C,Objective C|ObjectiveC
 Observability,
+OCaml,O Caml
 Occam,
 Oceanography,
 Open CL,OpenCL
@@ -887,6 +896,7 @@ Power Builder,PowerBuilder
 Power Electronics,PowerElectronics
 Power Mock,PowerMock
 Power Systems,PowerSystems
+PowerPoint,MS PowerPoint|Microsoft PowerPoint
 PowerShell,
 Preact,
 Preservation,
@@ -907,7 +917,9 @@ Prometheus,
 Property Test,PropertyTest
 Propulsion Systems,PropulsionSystems
 Prosthetics Design,ProstheticsDesign
+Prototyping,Rapid Prototyping
 Pseudonymization,
+Public Cloud,
 Public Speaking,PublicSpeaking
 Puppet,
 Puppet Making,PuppetMaking
@@ -916,15 +928,14 @@ Puppetry,
 Pure CSS,PureCSS
 Pure Script,PureScript
 Purple Teaming,PurpleTeaming
-Py GTK,PyGTK
-Py Qt,PyQt
-Py Side,PySide
-Py Test,PyTest
+PyGTK,Py GTK
+PyQt,Py Qt
 Pyramid,
 Pyrography,
+PySide,Py Side
+pytest,Py Test
 Python,
 PyTorch,Torch
-Q Unit,QUnit
 QML,
 Qt,
 Quality Assurance,QA|QualityAssurance
@@ -938,6 +949,7 @@ Quart,
 Query Optimization,QueryOptimization
 Quick Check,QuickCheck
 Quilling,
+QUnit,Q Unit
 Qwik,
 Rabbit MQ,RabbitMQ
 Racket,
@@ -960,6 +972,7 @@ Redwood,
 Reference Data,ReferenceData
 Reflexology,
 Refrigeration Engineering,RefrigerationEngineering
+Regression Testing,
 Rehabilitation Engineering,RehabilitationEngineering
 Reiki,
 Relay,
@@ -967,13 +980,13 @@ Reliability Engineering,ReliabilityEngineering
 Remix,
 Remote Sensing,RemoteSensing
 Renewable Energy Systems,RenewableEnergySystems
-RES Tful AP Is,REST API|REST APIs|RESTful API|RESTfulAPIs
 Research,
 Resin,
 Resin Art,ResinArt
 Responsible Disclosure,ResponsibleDisclosure
 REST API,REST|REST APIs|RESTful API|RESTful APIs
 Rest Assured,RestAssured
+RESTful APIs,RES Tful AP Is|REST API|REST APIs|RESTful API|RESTfulAPIs
 Restlet,
 Rethink DB,RethinkDB
 Revel,
@@ -985,6 +998,7 @@ Risk Assessment,RiskAssessment
 Risk Based Auth,RiskBasedAuth
 Risk Management,RiskManagement
 Rkt,
+Roadmapping,Product Roadmap
 Robot,
 Robotic Kinematics,RoboticKinematics
 Robotics,
@@ -998,7 +1012,7 @@ Ruby,
 Rust,
 Rustic,
 S2,
-SA Fe,SAFe
+SAFe,SA Fe
 Sahi,
 Sailing,
 Sails,
@@ -1033,7 +1047,7 @@ Security Awareness,SecurityAwareness
 Sed,
 Seed,
 Seismology,
-Selenium,
+Selenium,Selenium WebDriver
 Self,
 Self Sovereign,SelfSovereign
 SEM,
@@ -1094,10 +1108,9 @@ Spock,
 Spring,
 Spring Boot,SpringBoot
 SPSS,
-SQ Lite,SQLite
 SQL,
-SQL Alchemy,SQLAlchemy
-SQLite,
+SQLAlchemy,SQL Alchemy
+SQLite,SQ Lite
 SRE,
 Stained Glass,StainedGlass
 Stakeholder Management,StakeholderManagement
@@ -1127,8 +1140,7 @@ Svelte,SvelteKit
 Svelte Kit,SvelteKit
 SWC,
 Swift,
-Swift UI,SwiftUI
-SwiftUI,
+SwiftUI,Swift UI
 Swimming,
 Swing,
 Sycamore,
@@ -1201,11 +1213,12 @@ Truffle Hunting,TruffleHunting
 TSQL,
 Turbomachinery,
 Turing,
-Type ORM,TypeORM
+TypeORM,Type ORM
 TypeScript,TS
 UAT,
-UI Automator,UIAutomator
+UI Design,User Interface Design
 UI Engineering,UIEngineering
+UiAutomator,UI Automator
 Underwater Welding,UnderwaterWelding
 Unicon,
 Unicycling,
@@ -1217,12 +1230,13 @@ Uno,
 Unreal Script,UnrealScript
 Urban Planning,UrbanPlanning
 Urql,
+User Research,UX Research
 Uvicorn,
-UX Design,UXDesign
+UX Design,UXDesign|User Experience Design
 Vagrant,
 Vala,
 Vapor,
-VB Script,VBScript
+VBScript,VB Script
 VCL,
 Vendor Management,VendorManagement
 Vendor Risk,VendorRisk
@@ -1286,9 +1300,9 @@ WPF,
 Writing,
 WTL,
 Wx Widgets,WxWidgets
-X Base,XBase
 X10,
-XC Test,XCTest
+xBase,X Base
+XCTest,XC Test
 XGBoost,
 Xlib,
 XPL,

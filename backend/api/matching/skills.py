@@ -116,6 +116,12 @@ def _skill_index() -> tuple[dict[str, str], int]:
                 lookup.setdefault(key, canonical)
                 max_words = max(max_words, len(key.split()))
 
+                # Also index the de-spaced form, so a resume writing "SwiftUI"
+                # matches an entry stored as "Swift UI" and vice versa.
+                squashed = key.replace(" ", "")
+                if squashed != key and len(squashed) > 2:
+                    lookup.setdefault(squashed, canonical)
+
     return lookup, max_words
 
 

@@ -41,8 +41,9 @@ npm run dev
 
 ```bash
 # Backend (repo root)
-pytest                                   # 163 tests
+pytest                                   # 182 tests
 ruff check backend/
+python manage.py evaluate_matching       # matching quality — see EVALUATION.md
 python manage.py check --deploy          # production readiness gate
 python manage.py deactivate_expired_jobs # run hourly in production
 python manage.py seed_jobs --clear       # reseed demo data
@@ -101,6 +102,11 @@ invalidated by a signal whenever a `Job` changes.
 
 The scorer sits behind a narrow interface, so an embedding-based backend can
 replace it without touching the views.
+
+**Quality is measured, not assumed** — see **[EVALUATION.md](EVALUATION.md)**.
+On the labelled set: NDCG@5 0.943, P@1 1.000, skill-extraction F1 0.892. Those
+labels are hand-authored, so they gate regressions rather than prove real-world
+accuracy; the limitations are documented there.
 
 ### Data model
 
