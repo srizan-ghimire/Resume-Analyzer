@@ -13,38 +13,37 @@
     "Helvetica Neue", Arial, sans-serif;
   --font-display: var(--font-sans);
 
-  --radius-card: 6px; /* Tinker uses sharper corners/minimal radius */
+  --radius-card: 8px;
 
-  --color-brand-50: #f0effe;
-  --color-brand-100: #e1e0ff;
-  --color-brand-200: #c8ceff;
-  --color-brand-300: #b1a9ff;
-  --color-brand-400: #8467ff;
-  --color-brand-500: #6d55d2;
-  --color-brand-600: #5753c6;
-  --color-brand-700: #463b80;
-  --color-brand-800: #3b2f71;
-  --color-brand-900: #262047;
+  --color-brand-50: #faf8f5;
+  --color-brand-100: #f0ebe4;
+  --color-brand-200: #e2d9cd;
+  --color-brand-300: #c9bba8;
+  --color-brand-400: #a89279;
+  --color-brand-500: #8a7560;
+  --color-brand-600: #6b5a48;
+  --color-brand-700: #574a3c;
+  --color-brand-800: #3e352c;
+  --color-brand-900: #2a231c;
 }
 
 @layer base {
   :root {
-    --surface: #fcfcfc;
+    --surface: #f8f5f0;
     --surface-raised: #ffffff;
-    --surface-sunken: #f5f5f5;
-    --border: #e8e8e8;
-    --border-strong: #d9d9d9;
-    --text: #000000;
-    --text-muted: #646464;
-    --text-subtle: #8d8d8d;
-    --accent: #5753c6;
+    --surface-sunken: #f0ebe4;
+    --border: #e2d9cd;
+    --border-strong: #c9bba8;
+    --text: #1a1714;
+    --text-muted: #6b5a48;
+    --text-subtle: #8a7560;
+    --accent: #1a1714;
     --accent-contrast: #ffffff;
-    --accent-soft: #f0effe;
+    --accent-soft: #f0ebe4;
 
-    /* Tinker primary button (stark black in light mode) */
-    --btn-primary-bg: #000000;
+    --btn-primary-bg: #1a1714;
     --btn-primary-text: #ffffff;
-    --btn-primary-hover: #2e2e2e;
+    --btn-primary-hover: #2a231c;
 
     --ok: oklch(0.55 0.14 155);
     --ok-soft: oklch(0.95 0.04 155);
@@ -53,39 +52,9 @@
     --danger: oklch(0.55 0.19 25);
     --danger-soft: oklch(0.96 0.03 25);
 
-    --ring: #5753c6;
+    --ring: #6b5a48;
 
     color-scheme: light;
-  }
-
-  .dark {
-    --surface: #000000;
-    --surface-raised: #111111;
-    --surface-sunken: #0b0b0b;
-    --border: #232323;
-    --border-strong: #3a3a3a;
-    --text: #ffffff;
-    --text-muted: #b4b4b4;
-    --text-subtle: #616161;
-    --accent: #b1a9ff;
-    --accent-contrast: #000000;
-    --accent-soft: #232323;
-
-    /* Tinker primary button (stark white in dark mode) */
-    --btn-primary-bg: #ffffff;
-    --btn-primary-text: #000000;
-    --btn-primary-hover: #f6f6f6;
-
-    --ok: oklch(0.72 0.15 155);
-    --ok-soft: oklch(0.28 0.06 155);
-    --warn: oklch(0.78 0.14 80);
-    --warn-soft: oklch(0.3 0.06 80);
-    --danger: oklch(0.68 0.18 25);
-    --danger-soft: oklch(0.29 0.07 25);
-
-    --ring: #b1a9ff;
-
-    color-scheme: dark;
   }
 
   * {
@@ -176,16 +145,16 @@
 }
 
 @utility bg-pattern-dots {
-  background-image: radial-gradient(#e0e0e0 1.2px, transparent 1.2px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(#d5cdc2 0.8px, transparent 0.8px);
+  background-size: 16px 16px;
 }
 
 @utility bg-pattern-plus {
-  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 7v10M7 12h10' stroke='%23e0e0e0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: 24px 24px;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8 5v6M5 8h6' stroke='%23d5cdc2' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 16px 16px;
 }
 
 @utility bg-pattern-divide {
-  background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='12' cy='7' r='1.2' fill='%23e0e0e0'/%3E%3Ccircle cx='12' cy='17' r='1.2' fill='%23e0e0e0'/%3E%3Cline x1='7' y1='14' x2='17' y2='10' stroke='%23e0e0e0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-size: 24px 24px;
+  background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='4.5' r='0.8' fill='%23d5cdc2'/%3E%3Ccircle cx='8' cy='11.5' r='0.8' fill='%23d5cdc2'/%3E%3Cline x1='5' y1='9.5' x2='11' y2='6.5' stroke='%23d5cdc2' stroke-width='1' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-size: 16px 16px;
 }

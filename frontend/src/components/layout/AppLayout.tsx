@@ -146,6 +146,21 @@ function SidebarFooter({
         </span>
       </div>
 
+      <NavLink
+        to="/settings"
+        className={({ isActive }) =>
+          cn(
+            "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+            isActive
+              ? "bg-[var(--accent-soft)] text-[var(--accent)]"
+              : "text-[var(--text-muted)] hover:bg-[var(--surface-sunken)] hover:text-[var(--text)]",
+          )
+        }
+      >
+        <IconSettings />
+        Settings
+      </NavLink>
+
       <Dialog open={open} onOpenChange={setOpen}>
         <Button
           variant="ghost"
@@ -292,6 +307,15 @@ function IconLogout() {
     <svg {...svgProps()}>
       <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
       <path d="m16 17 5-5-5-5M21 12H9" />
+    </svg>
+  );
+}
+
+function IconSettings() {
+  return (
+    <svg {...svgProps()}>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
     </svg>
   );
 }
