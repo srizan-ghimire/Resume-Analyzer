@@ -37,6 +37,8 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Lock file excluded so Cloudflare Pages uses `npm install` (not strict `npm ci`)
+frontend/package-lock.json
 
 # Build artifacts
 build/
