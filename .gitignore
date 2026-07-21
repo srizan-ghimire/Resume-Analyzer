@@ -29,7 +29,7 @@ htmlcov/
 # Security
 .env
 .env.*
-!.env.example
+.env.example
 secrets.json
 
 # Node.js
@@ -55,3 +55,5 @@ Thumbs.db
 
 # NOTE: backend/api/data/*.csv is deliberately tracked. The matching engine and
 # the seed_jobs command cannot run without it.
+CLAUDE.md
+RUNNING.md
