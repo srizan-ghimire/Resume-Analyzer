@@ -1,130 +1,279 @@
-import { Link } from 'react-router-dom';
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-const LandingPage = () => {
+import { useAuth } from "@/app/AuthProvider";
+import { ThemeToggle } from "@/app/ThemeProvider";
+import { usePageTitle } from "@/app/usePageTitle";
+import { Logo } from "@/components/layout/Logo";
+import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
+
+const FEATURES = [
+  {
+    title: "Know your score before you apply",
+    body: "Paste any job description and get a 0–100 match score, split into keyword relevance and resume quality.",
+  },
+  {
+    title: "See exactly what's missing",
+    body: "Required skills you don't mention, ranked by how central each one is to the posting — not an undifferentiated list.",
+  },
+  {
+    title: "Pass the format checks",
+    body: "Contact details, parseable sections, dates, bullet density, action verbs. The things that get resumes filtered out before a human reads them.",
+  },
+  {
+    title: "Get matched to real openings",
+    body: "Recommendations are scored against live postings from recruiters on Resumatch, with the matching skills shown.",
+  },
+];
+
+const STEPS = [
+  { step: "1", title: "Upload your resume", body: "PDF or DOCX. We parse it once and pull out your skills." },
+  { step: "2", title: "Check it against a role", body: "Paste a job description and read the full report." },
+  { step: "3", title: "Apply where you fit", body: "Browse matches ranked by score and track every application." },
+];
+
+export function LandingPage() {
+  usePageTitle();
+  const { isAuthenticated, user } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const homeHref = user?.role === "RECRUITER" ? "/recruiter/jobs" : "/jobs";
+
   return (
-    <div className="min-h-screen bg-white">
-  {/* Navigation Bar */}
-  <nav className="bg-white shadow-sm fixed w-full z-10">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-between h-16 items-center">
-        <div className="flex items-center">
-        <img src="/logoblack.png" alt="logo" width="200"/>
-          <div className="hidden md:flex ml-10 space-x-8">
-            <a href="#" className="text-gray-700 hover:text-black transition-colors">Home</a>
-            <a href="#features" className="text-gray-700 hover:text-black transition-colors">Features</a>
-          </div>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          <a 
-            href="http://127.0.0.1:8000/recruiter/login/?next=/recruiter/" 
-            target='_blank'
-            className="px-4 py-2 border border-black text-black rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            Recruiters Dashboard
-          </a>
-          <Link 
-            to="/login" 
-            className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Job Seekers Dashboard
+    <div className="min-h-dvh bg-[var(--surface)]">
+      <a href="#main" className="sr-only-focusable">
+        Skip to main content
+      </a>
+
+      <header className="sticky top-0 z-30 border-b bg-[var(--surface)]/85 backdrop-blur">
+        <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6">
+          <Link to="/" className="rounded-lg">
+            <Logo />
           </Link>
-        </div>
-      </div>
-    </div>
-  </nav>
 
-  {/* Hero Section */}
-  <div className="pt-32 pb-20 bg-gradient-to-b from-white to-gray-50">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-          Smart Career Matching Powered by AI
-        </h1>
-        <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-          Revolutionize your hiring process or find your dream job with our intelligent resume screening and job recommendation system.
-        </p>
-        
-        <div className="flex justify-center space-x-4">
-          <Link 
-            to="/login" 
-            className="px-8 py-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-colors text-lg"
-          >
-            Get Started for Job Seekers
-          </Link>
-          <a 
-            href="http://127.0.0.1:8000/recruiter/login/?next=/recruiter/" 
-            target='_blank'
-            className="px-8 py-4 border-2 border-black text-black rounded-xl hover:bg-gray-50 transition-colors text-lg"
-          >
-            Try for Recruiters
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+          <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 sm:flex">
+            <a
+              href="#features"
+              className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
+            >
+              Features
+            </a>
+            <a
+              href="#how"
+              className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)] hover:text-[var(--text)]"
+            >
+              How it works
+            </a>
+            <ThemeToggle />
+            {isAuthenticated ? (
+              <Button asChild size="sm" className="ml-2">
+                <Link to={homeHref}>Open app</Link>
+              </Button>
+            ) : (
+              <>
+                <Button asChild variant="ghost" size="sm">
+                  <Link to="/login">Sign in</Link>
+                </Button>
+                <Button asChild size="sm">
+                  <Link to="/register">Get started</Link>
+                </Button>
+              </>
+            )}
+          </nav>
 
-  {/* Features Section */}
-  <div className="py-20 bg-white" id='features'>
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl font-bold text-center mb-16 text-gray-900" >Key Features</h2>
-      
-      <div className="grid md:grid-cols-3 gap-12">
-        <div className="p-8 rounded-xl bg-white shadow-lg hover:shadow-xl transition-shadow">
-          <div className="w-16 h-16 bg-gray-100 rounded-xl mb-6 flex items-center justify-center">
-            <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-            </svg>
+          {/* The old header hid its links at <md with no replacement. */}
+          <div className="ml-auto flex items-center gap-1 sm:hidden">
+            <ThemeToggle />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="landing-menu"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                {menuOpen ? <path d="M18 6 6 18M6 6l12 12" /> : <path d="M3 6h18M3 12h18M3 18h18" />}
+              </svg>
+            </Button>
           </div>
-          <h3 className="text-xl font-semibold mb-4 text-gray-900">Automated Resume Screening</h3>
-          <p className="text-gray-600">AI-powered analysis of resumes and job descriptions for instant candidate matching.</p>
         </div>
 
-        <div className="p-8 rounded-xl bg-white shadow-lg hover:shadow-xl transition-shadow">
-          <div className="w-16 h-16 bg-gray-100 rounded-xl mb-6 flex items-center justify-center">
-            <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
+        <div
+          id="landing-menu"
+          hidden={!menuOpen}
+          className="border-t px-4 py-3 sm:hidden"
+        >
+          <nav aria-label="Primary" className="flex flex-col gap-1">
+            <a href="#features" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)]">
+              Features
+            </a>
+            <a href="#how" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-2 text-sm text-[var(--text-muted)]">
+              How it works
+            </a>
+            <div className="mt-2 flex flex-col gap-2">
+              {isAuthenticated ? (
+                <Button asChild>
+                  <Link to={homeHref}>Open app</Link>
+                </Button>
+              ) : (
+                <>
+                  <Button asChild variant="secondary">
+                    <Link to="/login">Sign in</Link>
+                  </Button>
+                  <Button asChild>
+                    <Link to="/register">Get started</Link>
+                  </Button>
+                </>
+              )}
+            </div>
+          </nav>
+        </div>
+      </header>
+
+      <main id="main">
+        <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[var(--accent-soft)] px-3 py-1 text-xs font-medium text-[var(--accent)]">
+              Resume scoring, without the guesswork
+            </span>
+            <h1 className="mt-5 text-4xl font-semibold tracking-tight sm:text-5xl">
+              Find out why your resume isn't getting through
+            </h1>
+            <p className="mx-auto mt-5 max-w-xl text-lg text-[var(--text-muted)]">
+              Upload it once. Score it against any job description, see the skills
+              you're missing, and get matched to roles that actually fit.
+            </p>
+            {/* flex-wrap: the old hero buttons overflowed at 375px. */}
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg">
+                <Link to={isAuthenticated ? homeHref : "/register"}>
+                  {isAuthenticated ? "Open app" : "Analyze my resume"}
+                </Link>
+              </Button>
+              <Button asChild variant="secondary" size="lg">
+                <Link to="/jobs">Browse open roles</Link>
+              </Button>
+            </div>
+            <p className="mt-4 text-xs text-[var(--text-subtle)]">
+              Browsing jobs doesn't require an account.
+            </p>
           </div>
-          <h3 className="text-xl font-semibold mb-4 text-gray-900">Smart Job Recommendations</h3>
-          <p className="text-gray-600">Personalized job suggestions based on your skills, experience, and preferences.</p>
-        </div>
 
-        <div className="p-8 rounded-xl bg-white shadow-lg hover:shadow-xl transition-shadow">
-          <div className="w-16 h-16 bg-gray-100 rounded-xl mb-6 flex items-center justify-center">
-            <svg className="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
+          <ScorePreview className="mx-auto mt-16 max-w-2xl" />
+        </section>
+
+        <section id="features" className="border-t bg-[var(--surface-sunken)]">
+          <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+            <h2 className="text-center text-3xl font-semibold tracking-tight">
+              What you actually get
+            </h2>
+            <div className="mt-12 grid gap-6 sm:grid-cols-2">
+              {FEATURES.map((feature) => (
+                <div key={feature.title} className="surface-card p-6">
+                  <h3 className="text-base font-semibold">{feature.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                    {feature.body}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-          <h3 className="text-xl font-semibold mb-4 text-gray-900">Real-time Tracking</h3>
-          <p className="text-gray-600">Real-time tracking allows continuous monitoring and instant updates of activities or data as they happen, enabling timely decision-making and improved efficiency.</p>
+        </section>
+
+        <section id="how" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
+          <h2 className="text-center text-3xl font-semibold tracking-tight">
+            Three steps
+          </h2>
+          <ol className="mt-12 grid gap-6 sm:grid-cols-3">
+            {STEPS.map((item) => (
+              <li key={item.step} className="surface-card p-6">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-[var(--accent)] text-sm font-semibold text-[var(--accent-contrast)]">
+                  {item.step}
+                </span>
+                <h3 className="mt-4 text-base font-semibold">{item.title}</h3>
+                <p className="mt-2 text-sm text-[var(--text-muted)]">{item.body}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div className="surface-card mt-16 flex flex-col items-center gap-5 p-10 text-center">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Stop applying blind
+            </h2>
+            <p className="max-w-md text-sm text-[var(--text-muted)]">
+              Get your first resume score in under a minute.
+            </p>
+            <Button asChild size="lg">
+              <Link to={isAuthenticated ? homeHref : "/register"}>
+                {isAuthenticated ? "Open app" : "Get started free"}
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-[var(--text-muted)] sm:flex-row sm:px-6">
+          <Logo />
+          <p>© {new Date().getFullYear()} Resumatch</p>
+          <div className="flex gap-4">
+            <Link to="/jobs" className="hover:text-[var(--text)]">
+              Jobs
+            </Link>
+            <Link to="/register" className="hover:text-[var(--text)]">
+              Sign up
+            </Link>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
-  </div>
-
-  {/* CTA Section */}
-  <div className="bg-black text-white py-20">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Career Journey?</h2>
-      <p className="text-xl mb-8 text-gray-300">Join thousands of users who already found their perfect matches</p>
-      <Link 
-        to="/register" 
-        className="inline-block px-8 py-4 bg-white text-black rounded-xl hover:bg-gray-100 transition-colors text-lg font-semibold"
-      >
-        Start Now for Free
-      </Link>
-    </div>
-  </div>
-
-  {/* Footer */}
-  <footer className="bg-gray-100 py-12">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">
-      <p>© 2023 CareerMatch. All rights reserved.</p>
-    </div>
-  </footer>
-</div>
   );
-};
+}
 
-export default LandingPage;
+/** Static illustration of the report. Labelled as an example, not live data. */
+function ScorePreview({ className }: { className?: string }) {
+  const gaps = [
+    { skill: "Kubernetes", importance: 0.92 },
+    { skill: "Apache Spark", importance: 0.64 },
+    { skill: "Terraform", importance: 0.38 },
+  ];
+
+  return (
+    <figure className={cn("surface-card overflow-hidden", className)}>
+      <div className="flex flex-wrap items-center justify-between gap-4 border-b p-6">
+        <div>
+          <p className="text-sm text-[var(--text-muted)]">Example report</p>
+          <p className="text-lg font-semibold">Senior Data Scientist</p>
+        </div>
+        <div className="text-right">
+          <p className="text-4xl font-semibold text-[var(--accent)]">74</p>
+          <p className="text-sm text-[var(--text-muted)]">Good match</p>
+        </div>
+      </div>
+      <div className="space-y-4 p-6">
+        <p className="text-sm font-medium">Missing skills, by importance</p>
+        {gaps.map((gap) => (
+          <div key={gap.skill} className="space-y-1.5">
+            <div className="flex justify-between text-sm">
+              <span>{gap.skill}</span>
+              <span className="text-[var(--text-subtle)]">
+                {Math.round(gap.importance * 100)}%
+              </span>
+            </div>
+            <div className="h-2 overflow-hidden rounded-full bg-[var(--surface-sunken)]">
+              <div
+                className="h-full rounded-full bg-[var(--accent)]"
+                style={{ width: `${gap.importance * 100}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+      <figcaption className="sr-only-focusable">
+        Example of a Resumatch ATS report showing a score of 74 out of 100.
+      </figcaption>
+    </figure>
+  );
+}

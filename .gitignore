@@ -2,30 +2,34 @@
 *.pyc
 *.pyo
 *.pyd
-backend/backend/__pycache__
-/backend/__pycache__
-/api/__pycache__
 **/__pycache__/
-
-*.sqlite3
+*.egg-info/
 
 # Virtual environments
+.venv/
 env/
 venv/
 ENV/
-.venv/
-*.egg-info/
 
 # Django
+*.sqlite3
 db.sqlite3
-/media/
 staticfiles/
+backend/media/
+
+# Tests / tooling
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/
 
 # Logs
 *.log
 
 # Security
 .env
+.env.*
+!.env.example
 secrets.json
 
 # Node.js
@@ -37,33 +41,17 @@ yarn-error.log*
 # Build artifacts
 build/
 dist/
-.DS_Store
+*.tsbuildinfo
 
-# System Files
+# System / editor
+.DS_Store
 Thumbs.db
 .idea/
 .vscode/
 *.bak
-
-
- IDE/Editor configurations
 *.swp
 *.swo
-*.bak
 *.tmp
 
-# OS-specific
-.DS_Store
-
-backend/api/migrations/__pycache__
-
-# media/documents
-
-backend/media/documents
-backend/media/static/cleaned_df.pkl
-backend/static/cleaned_data.csv
-
-backend/api/tests.py
-
-backend/static/job_descriptions.csv
-
+# NOTE: backend/api/data/*.csv is deliberately tracked. The matching engine and
+# the seed_jobs command cannot run without it.

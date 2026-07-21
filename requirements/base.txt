@@ -1,0 +1,32 @@
+# Core
+Django==5.1.3
+djangorestframework==3.15.2
+djangorestframework-simplejwt==5.5.0
+django-cors-headers==4.6.0
+django-filter==24.3
+drf-spectacular==0.28.0
+django-environ==0.11.2
+django-jazzmin==3.0.5
+
+# Matching engine
+scikit-learn==1.6.1
+rank-bm25==0.2.2
+numpy==2.2.2
+pandas==2.2.3
+# Pinned: scipy >=1.15 ships compiled extensions that Windows Application
+# Control blocks on some developer machines. 1.14.1 loads everywhere.
+scipy==1.14.1
+
+# Document parsing
+pypdf==5.1.0
+python-docx==1.1.2
+
+# Serving / storage
+gunicorn==23.0.0
+whitenoise==6.8.2
+dj-database-url==2.3.0
+psycopg[binary]==3.2.3
+django-storages==1.14.4
+boto3==1.35.81
+
+pillow==11.0.0

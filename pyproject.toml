@@ -1,0 +1,29 @@
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "backend.settings_test"
+pythonpath = ["backend"]
+testpaths = ["backend/tests"]
+python_files = ["test_*.py"]
+addopts = "-q --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = [".venv", "migrations", "frontend"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "DJ"]
+ignore = [
+    "B008",  # DRF and Django idiomatically call functions in defaults
+    "DJ001", # null=True on CharField is deliberate where used
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["api", "backend", "tests"]
+
+[tool.ruff.lint.per-file-ignores]
+"backend/tests/*" = ["S101"]
+
+[tool.coverage.run]
+source = ["backend/api"]
+omit = ["*/migrations/*", "*/tests/*"]

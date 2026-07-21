@@ -1,0 +1,61 @@
+databases:
+  - name: resumatch-db
+    plan: free
+    databaseName: resumatch
+
+services:
+  - type: web
+    name: resumatch-api
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python backend/manage.py collectstatic --noinput
+    startCommand: >
+      gunicorn backend.wsgi:application --chdir backend
+      --workers 3 --timeout 120 --bind 0.0.0.0:$PORT
+    preDeployCommand: python backend/manage.py migrate --noinput
+    healthCheckPath: /api/v1/health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: resumatch-db
+          property: connectionString
+      # Set to the deployed frontend origin once it exists.
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      # Resume files must go to object storage: the disk is ephemeral.
+      - key: USE_S3
+        value: "True"
+      - key: AWS_STORAGE_BUCKET_NAME
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_S3_ENDPOINT_URL
+        sync: false
+
+  - type: cron
+    name: resumatch-close-expired-jobs
+    runtime: python
+    plan: free
+    schedule: "0 * * * *"
+    buildCommand: pip install -r requirements.txt
+    startCommand: python backend/manage.py deactivate_expired_jobs
+    envVars:
+      - key: SECRET_KEY
+        fromService:
+          name: resumatch-api
+          type: web
+          envVarKey: SECRET_KEY
+      - key: DATABASE_URL
+        fromDatabase:
+          name: resumatch-db
+          property: connectionString

@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+/*
+ * Resumatch design tokens.
+ *
+ * Replaces four competing styling systems (Tailwind, CSS Modules, Mantine,
+ * inline styles) plus a set of DaisyUI class names with no DaisyUI installed.
+ * Everything is Tailwind v4 + these tokens now.
+ */
+
+@theme {
+  --font-sans: "Inter var", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-sans);
+
+  --radius-card: 0.875rem;
+
+  --color-brand-50: oklch(0.97 0.02 255);
+  --color-brand-100: oklch(0.94 0.04 255);
+  --color-brand-200: oklch(0.89 0.07 255);
+  --color-brand-300: oklch(0.81 0.11 258);
+  --color-brand-400: oklch(0.71 0.15 260);
+  --color-brand-500: oklch(0.62 0.19 262);
+  --color-brand-600: oklch(0.54 0.2 263);
+  --color-brand-700: oklch(0.47 0.18 263);
+  --color-brand-800: oklch(0.4 0.15 263);
+  --color-brand-900: oklch(0.34 0.12 263);
+}
+
+@layer base {
+  :root {
+    --surface: oklch(0.99 0.002 250);
+    --surface-raised: oklch(1 0 0);
+    --surface-sunken: oklch(0.96 0.004 250);
+    --border: oklch(0.9 0.006 250);
+    --border-strong: oklch(0.82 0.01 250);
+    --text: oklch(0.22 0.015 260);
+    --text-muted: oklch(0.5 0.015 260);
+    --text-subtle: oklch(0.62 0.012 260);
+    --accent: var(--color-brand-600);
+    --accent-contrast: oklch(1 0 0);
+    --accent-soft: var(--color-brand-50);
+
+    --ok: oklch(0.55 0.14 155);
+    --ok-soft: oklch(0.95 0.04 155);
+    --warn: oklch(0.62 0.14 75);
+    --warn-soft: oklch(0.96 0.05 85);
+    --danger: oklch(0.55 0.19 25);
+    --danger-soft: oklch(0.96 0.03 25);
+
+    --ring: var(--color-brand-500);
+
+    color-scheme: light;
+  }
+
+  .dark {
+    --surface: oklch(0.19 0.012 265);
+    --surface-raised: oklch(0.23 0.014 265);
+    --surface-sunken: oklch(0.16 0.012 265);
+    --border: oklch(0.31 0.014 265);
+    --border-strong: oklch(0.4 0.016 265);
+    --text: oklch(0.96 0.004 260);
+    --text-muted: oklch(0.73 0.012 260);
+    --text-subtle: oklch(0.6 0.012 260);
+    --accent: var(--color-brand-400);
+    --accent-contrast: oklch(0.16 0.012 265);
+    --accent-soft: oklch(0.28 0.05 262);
+
+    --ok: oklch(0.72 0.15 155);
+    --ok-soft: oklch(0.28 0.06 155);
+    --warn: oklch(0.78 0.14 80);
+    --warn-soft: oklch(0.3 0.06 80);
+    --danger: oklch(0.68 0.18 25);
+    --danger-soft: oklch(0.29 0.07 25);
+
+    --ring: var(--color-brand-400);
+
+    color-scheme: dark;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--surface);
+    color: var(--text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /*
+   * Keyboard focus must always be visible. The previous build had no
+   * focus-visible styling at all, and several controls were divs.
+   */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+}
+
+@layer components {
+  /* Screen-reader-only, visible once focused: used by the skip link. */
+  .sr-only-focusable {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only-focusable:focus {
+    position: fixed;
+    top: 0.75rem;
+    left: 0.75rem;
+    z-index: 100;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0.625rem 1rem;
+    clip: auto;
+    white-space: normal;
+    background: var(--surface-raised);
+    color: var(--text);
+    border: 1px solid var(--border-strong);
+    border-radius: 0.5rem;
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.15);
+  }
+}
+
+@utility surface-card {
+  background-color: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+}

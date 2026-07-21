@@ -1,0 +1,1900 @@
+openapi: 3.0.3
+info:
+  title: Resumatch API
+  version: 1.0.0
+  description: Resume analysis, job matching and application tracking.
+paths:
+  /api/v1/applications/:
+    get:
+      operationId: applications_list
+      description: |-
+        Seekers see and create their own applications.
+
+        Recruiters see applications to jobs they posted, and are the only ones who
+        can change status. This is the endpoint the old ``recruiter_update_status``
+        stub was meant to be.
+      parameters:
+      - in: query
+        name: job
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          type: string
+          enum:
+          - ACCEPTED
+          - IN_REVIEW
+          - REJECTED
+          - SHORTLISTED
+          - SUBMITTED
+        description: |-
+          * `SUBMITTED` - Submitted
+          * `IN_REVIEW` - In review
+          * `SHORTLISTED` - Shortlisted
+          * `REJECTED` - Rejected
+          * `ACCEPTED` - Accepted
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedApplicationList'
+          description: ''
+    post:
+      operationId: applications_create
+      description: |-
+        Seekers see and create their own applications.
+
+        Recruiters see applications to jobs they posted, and are the only ones who
+        can change status. This is the endpoint the old ``recruiter_update_status``
+        stub was meant to be.
+      tags:
+      - applications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreateRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreateRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ApplicationCreateRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApplicationCreate'
+          description: ''
+  /api/v1/applications/{id}/:
+    get:
+      operationId: applications_retrieve
+      description: |-
+        Seekers see and create their own applications.
+
+        Recruiters see applications to jobs they posted, and are the only ones who
+        can change status. This is the endpoint the old ``recruiter_update_status``
+        stub was meant to be.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Job application.
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+          description: ''
+    patch:
+      operationId: applications_partial_update
+      description: |-
+        Seekers see and create their own applications.
+
+        Recruiters see applications to jobs they posted, and are the only ones who
+        can change status. This is the endpoint the old ``recruiter_update_status``
+        stub was meant to be.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this Job application.
+        required: true
+      tags:
+      - applications
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+          description: ''
+  /api/v1/ats-report/:
+    post:
+      operationId: ats_report_create
+      description: Score the caller's resume against a pasted job description and
+        return matched skills, weighted gaps, format checks and suggested fixes.
+      tags:
+      - matching
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtsRequestRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AtsRequestRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AtsRequestRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AtsReport'
+          description: ''
+  /api/v1/auth/change-password/:
+    post:
+      operationId: auth_change_password_create
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: Password changed
+  /api/v1/auth/login/:
+    post:
+      operationId: auth_login_create
+      description: Exchange credentials for an access/refresh token pair.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+          description: ''
+  /api/v1/auth/logout/:
+    post:
+      operationId: auth_logout_create
+      description: Blacklist a refresh token so it cannot be used again.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LogoutRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '205':
+          description: Refresh token blacklisted
+  /api/v1/auth/me/:
+    get:
+      operationId: auth_me_retrieve
+      description: Read or update the authenticated user's own profile.
+      tags:
+      - auth
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: auth_me_update
+      description: Read or update the authenticated user's own profile.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfile'
+          description: ''
+    patch:
+      operationId: auth_me_partial_update
+      description: Read or update the authenticated user's own profile.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUpdateProfileRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfile'
+          description: ''
+  /api/v1/auth/refresh/:
+    post:
+      operationId: auth_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/v1/auth/register/:
+    post:
+      operationId: auth_register_create
+      description: Create a seeker or recruiter account and return tokens immediately.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+          description: ''
+  /api/v1/auth/verify/:
+    post:
+      operationId: auth_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerifyRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerifyRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerifyRequest'
+        required: true
+      responses:
+        '200':
+          description: No response body
+  /api/v1/health/:
+    get:
+      operationId: health_retrieve
+      description: Liveness and database connectivity probe.
+      tags:
+      - meta
+      security:
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+          description: ''
+  /api/v1/jobs/:
+    get:
+      operationId: jobs_list
+      description: Open jobs, newest first.
+      parameters:
+      - in: query
+        name: company_name
+        schema:
+          type: string
+      - in: query
+        name: is_remote
+        schema:
+          type: boolean
+      - in: query
+        name: job_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CONTRACT
+            - FULL_TIME
+            - INTERN
+            - PART_TIME
+            - TEMPORARY
+        description: |-
+          * `INTERN` - Internship
+          * `FULL_TIME` - Full-Time
+          * `PART_TIME` - Part-Time
+          * `TEMPORARY` - Temporary
+          * `CONTRACT` - Contract
+        explode: true
+        style: form
+      - in: query
+        name: location
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: posted_after
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: salary_max
+        schema:
+          type: number
+      - in: query
+        name: salary_min
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedJobList'
+          description: ''
+    post:
+      operationId: jobs_create
+      tags:
+      - jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: ''
+  /api/v1/jobs/{id}/:
+    get:
+      operationId: jobs_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this job.
+        required: true
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: ''
+    put:
+      operationId: jobs_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this job.
+        required: true
+      tags:
+      - jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/JobRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: ''
+    patch:
+      operationId: jobs_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this job.
+        required: true
+      tags:
+      - jobs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedJobRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedJobRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedJobRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: ''
+    delete:
+      operationId: jobs_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this job.
+        required: true
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/jobs/{id}/applicants/:
+    get:
+      operationId: jobs_applicants_list
+      description: Applicants for this job. Recruiter-only, own jobs only.
+      parameters:
+      - in: query
+        name: company_name
+        schema:
+          type: string
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this job.
+        required: true
+      - in: query
+        name: is_remote
+        schema:
+          type: boolean
+      - in: query
+        name: job_type
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - CONTRACT
+            - FULL_TIME
+            - INTERN
+            - PART_TIME
+            - TEMPORARY
+        description: |-
+          * `INTERN` - Internship
+          * `FULL_TIME` - Full-Time
+          * `PART_TIME` - Part-Time
+          * `TEMPORARY` - Temporary
+          * `CONTRACT` - Contract
+        explode: true
+        style: form
+      - in: query
+        name: location
+        schema:
+          type: string
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - in: query
+        name: posted_after
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: salary_max
+        schema:
+          type: number
+      - in: query
+        name: salary_min
+        schema:
+          type: number
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - jobs
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedApplicantList'
+          description: ''
+  /api/v1/recommendations/:
+    get:
+      operationId: recommendations_list
+      description: Rank open jobs against the caller's primary resume. Results are
+        real job postings, scored with explanations of what matched.
+      parameters:
+      - in: query
+        name: limit
+        schema:
+          type: integer
+        description: Maximum results (1-50). Default 10.
+      - in: query
+        name: min_score
+        schema:
+          type: number
+          format: double
+        description: Score floor, 0-1. Default 0.
+      tags:
+      - matching
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recommendation'
+          description: ''
+  /api/v1/resumes/:
+    get:
+      operationId: resumes_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - resumes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResumeList'
+          description: ''
+  /api/v1/resumes/{id}/:
+    get:
+      operationId: resumes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this resume.
+        required: true
+      tags:
+      - resumes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resume'
+          description: ''
+    delete:
+      operationId: resumes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this resume.
+        required: true
+      tags:
+      - resumes
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/resumes/{id}/download/:
+    get:
+      operationId: resumes_download_retrieve
+      description: Download a resume. Permitted for its owner, and for recruiters
+        who have received an application including it.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this resume.
+        required: true
+      tags:
+      - resumes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: The resume file
+  /api/v1/resumes/{id}/set-primary/:
+    post:
+      operationId: resumes_set_primary_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this resume.
+        required: true
+      tags:
+      - resumes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resume'
+          description: ''
+  /api/v1/resumes/upload/:
+    post:
+      operationId: resumes_upload_create
+      description: Upload and parse a resume. Parsing happens once, here, so that
+        scoring requests never re-read the file.
+      tags:
+      - resumes
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ResumeUploadRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resume'
+          description: ''
+components:
+  schemas:
+    Applicant:
+      type: object
+      description: A recruiter's view of an application to one of their jobs.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job:
+          type: integer
+          readOnly: true
+        job_title:
+          type: string
+          readOnly: true
+        applicant_name:
+          type: string
+          readOnly: true
+        applicant_username:
+          type: string
+          readOnly: true
+        applicant_email:
+          type: string
+          format: email
+          readOnly: true
+        status:
+          $ref: '#/components/schemas/StatusEnum'
+        status_display:
+          type: string
+          readOnly: true
+        cover_note:
+          type: string
+          readOnly: true
+        match_score:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+        resume_url:
+          type: string
+          nullable: true
+          readOnly: true
+        resume_skills:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        applied_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status_changed_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - applicant_email
+      - applicant_name
+      - applicant_username
+      - applied_at
+      - cover_note
+      - id
+      - job
+      - job_title
+      - match_score
+      - resume_skills
+      - resume_url
+      - status_changed_at
+      - status_display
+    Application:
+      type: object
+      description: A seeker's view of their own application.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job:
+          allOf:
+          - $ref: '#/components/schemas/JobSummary'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/StatusEnum'
+          readOnly: true
+        status_display:
+          type: string
+          readOnly: true
+        cover_note:
+          type: string
+          readOnly: true
+        match_score:
+          type: number
+          format: double
+          readOnly: true
+          nullable: true
+        applied_at:
+          type: string
+          format: date-time
+          readOnly: true
+        status_changed_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - applied_at
+      - cover_note
+      - id
+      - job
+      - match_score
+      - status
+      - status_changed_at
+      - status_display
+    ApplicationCreate:
+      type: object
+      properties:
+        job:
+          type: integer
+        cover_note:
+          type: string
+      required:
+      - job
+    ApplicationCreateRequest:
+      type: object
+      properties:
+        job:
+          type: integer
+        cover_note:
+          type: string
+      required:
+      - job
+    AtsReport:
+      type: object
+      properties:
+        score:
+          type: integer
+        verdict:
+          type: string
+        keyword_score:
+          type: integer
+        quality_score:
+          type: integer
+        matched_skills:
+          type: array
+          items:
+            type: string
+        missing_skills:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillGap'
+        matched_education:
+          type: array
+          items:
+            type: string
+        required_years:
+          type: integer
+          nullable: true
+        keyword_density:
+          type: number
+          format: double
+        word_count:
+          type: integer
+        checks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Check'
+        suggestions:
+          type: array
+          items:
+            type: string
+      required:
+      - checks
+      - keyword_density
+      - keyword_score
+      - matched_education
+      - matched_skills
+      - missing_skills
+      - quality_score
+      - required_years
+      - score
+      - suggestions
+      - verdict
+      - word_count
+    AtsRequestRequest:
+      type: object
+      properties:
+        job_description:
+          type: string
+          minLength: 50
+          description: Paste the full job description, including requirements.
+          maxLength: 50000
+        resume_id:
+          type: integer
+          description: Defaults to your primary resume.
+      required:
+      - job_description
+    AuthTokenResponse:
+      type: object
+      description: |-
+        Response shape shared by register and login.
+
+        Declared explicitly so the generated OpenAPI schema -- and therefore the
+        frontend's generated types -- match what these views actually return.
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/User'
+          readOnly: true
+      required:
+      - access
+      - refresh
+      - user
+    ChangePasswordRequest:
+      type: object
+      properties:
+        current_password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        new_password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - current_password
+      - new_password
+    Check:
+      type: object
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        passed:
+          type: boolean
+        severity:
+          $ref: '#/components/schemas/SeverityEnum'
+        detail:
+          type: string
+      required:
+      - detail
+      - id
+      - label
+      - passed
+      - severity
+    Health:
+      type: object
+      properties:
+        status:
+          type: string
+        database:
+          type: string
+      required:
+      - database
+      - status
+    Job:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job_title:
+          type: string
+          maxLength: 150
+          minLength: 2
+        company_name:
+          type: string
+          maxLength: 120
+        location:
+          type: string
+          maxLength: 120
+        is_remote:
+          type: boolean
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        job_type_display:
+          type: string
+          readOnly: true
+        salary_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_currency:
+          type: string
+          maxLength: 3
+        job_description:
+          type: string
+        job_requirements:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+        is_open:
+          type: boolean
+          readOnly: true
+        recruiter:
+          type: integer
+          readOnly: true
+        recruiter_name:
+          type: string
+          readOnly: true
+        application_count:
+          type: integer
+          readOnly: true
+        has_applied:
+          type: boolean
+          readOnly: true
+      required:
+      - application_count
+      - company_name
+      - has_applied
+      - id
+      - is_open
+      - job_description
+      - job_title
+      - job_type_display
+      - location
+      - posted_at
+      - recruiter
+      - recruiter_name
+      - skills
+      - updated_at
+    JobRequest:
+      type: object
+      properties:
+        job_title:
+          type: string
+          minLength: 2
+          maxLength: 150
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        location:
+          type: string
+          minLength: 1
+          maxLength: 120
+        is_remote:
+          type: boolean
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        salary_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_currency:
+          type: string
+          minLength: 1
+          maxLength: 3
+        job_description:
+          type: string
+          minLength: 1
+        job_requirements:
+          type: string
+        expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+      required:
+      - company_name
+      - job_description
+      - job_title
+      - location
+    JobSummary:
+      type: object
+      description: Compact form used inside recommendations and application listings.
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        job_title:
+          type: string
+          maxLength: 150
+          minLength: 2
+        company_name:
+          type: string
+          maxLength: 120
+        location:
+          type: string
+          maxLength: 120
+        is_remote:
+          type: boolean
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        job_type_display:
+          type: string
+          readOnly: true
+        salary_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_currency:
+          type: string
+          maxLength: 3
+        posted_at:
+          type: string
+          format: date-time
+          readOnly: true
+        expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - company_name
+      - id
+      - job_title
+      - job_type_display
+      - location
+      - posted_at
+    JobSummaryRequest:
+      type: object
+      description: Compact form used inside recommendations and application listings.
+      properties:
+        job_title:
+          type: string
+          minLength: 2
+          maxLength: 150
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        location:
+          type: string
+          minLength: 1
+          maxLength: 120
+        is_remote:
+          type: boolean
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        salary_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_currency:
+          type: string
+          minLength: 1
+          maxLength: 3
+        expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+      - company_name
+      - job_title
+      - location
+    JobTypeEnum:
+      enum:
+      - INTERN
+      - FULL_TIME
+      - PART_TIME
+      - TEMPORARY
+      - CONTRACT
+      type: string
+      description: |-
+        * `INTERN` - Internship
+        * `FULL_TIME` - Full-Time
+        * `PART_TIME` - Part-Time
+        * `TEMPORARY` - Temporary
+        * `CONTRACT` - Contract
+    LoginRequest:
+      type: object
+      description: |-
+        Adds the user object to the token response.
+
+        Saves the client a round trip, and means the frontend never has to hold on
+        to credentials to identify the current user.
+      properties:
+        username:
+          type: string
+          writeOnly: true
+          minLength: 1
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - password
+      - username
+    LogoutRequest:
+      type: object
+      properties:
+        refresh:
+          type: string
+          minLength: 1
+      required:
+      - refresh
+    PaginatedApplicantList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Applicant'
+    PaginatedApplicationList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Application'
+    PaginatedJobList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Job'
+    PaginatedResumeList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Resume'
+    PatchedJobRequest:
+      type: object
+      properties:
+        job_title:
+          type: string
+          minLength: 2
+          maxLength: 150
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        location:
+          type: string
+          minLength: 1
+          maxLength: 120
+        is_remote:
+          type: boolean
+        job_type:
+          $ref: '#/components/schemas/JobTypeEnum'
+        salary_min:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_max:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,10}(?:\.\d{0,2})?$
+          nullable: true
+        salary_currency:
+          type: string
+          minLength: 1
+          maxLength: 3
+        job_description:
+          type: string
+          minLength: 1
+        job_requirements:
+          type: string
+        expiry_time:
+          type: string
+          format: date-time
+          nullable: true
+        is_active:
+          type: boolean
+    PatchedUpdateProfileRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 254
+        recruiter_profile:
+          $ref: '#/components/schemas/RecruiterProfileRequest'
+    Recommendation:
+      type: object
+      properties:
+        job:
+          allOf:
+          - $ref: '#/components/schemas/JobSummary'
+          readOnly: true
+        score:
+          type: number
+          format: double
+          readOnly: true
+        match_percentage:
+          type: integer
+          readOnly: true
+        matched_skills:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        missing_skills:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        has_applied:
+          type: boolean
+          readOnly: true
+      required:
+      - has_applied
+      - job
+      - match_percentage
+      - matched_skills
+      - missing_skills
+      - score
+    RecruiterProfile:
+      type: object
+      properties:
+        company_name:
+          type: string
+          maxLength: 120
+        company_website:
+          type: string
+          format: uri
+          maxLength: 200
+        company_location:
+          type: string
+          maxLength: 120
+        about:
+          type: string
+      required:
+      - company_name
+    RecruiterProfileRequest:
+      type: object
+      properties:
+        company_name:
+          type: string
+          minLength: 1
+          maxLength: 120
+        company_website:
+          type: string
+          format: uri
+          maxLength: 200
+        company_location:
+          type: string
+          maxLength: 120
+        about:
+          type: string
+      required:
+      - company_name
+    RegisterRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          minLength: 1
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+          minLength: 1
+        password_confirm:
+          type: string
+          writeOnly: true
+          minLength: 1
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          default: SEEKER
+        company_name:
+          type: string
+          writeOnly: true
+          description: Required when registering as a recruiter.
+      required:
+      - email
+      - password
+      - password_confirm
+      - username
+    Resume:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        original_filename:
+          type: string
+          readOnly: true
+        content_type:
+          type: string
+          readOnly: true
+        size_bytes:
+          type: integer
+          readOnly: true
+        extracted_skills:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        extracted_education:
+          type: array
+          items:
+            type: string
+          readOnly: true
+        skill_count:
+          type: integer
+          readOnly: true
+        is_primary:
+          type: boolean
+          readOnly: true
+        is_parsed:
+          type: boolean
+          readOnly: true
+        parse_error:
+          type: string
+          readOnly: true
+        parsed_at:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        uploaded_at:
+          type: string
+          format: date-time
+          readOnly: true
+        download_url:
+          type: string
+          readOnly: true
+      required:
+      - content_type
+      - download_url
+      - extracted_education
+      - extracted_skills
+      - id
+      - is_parsed
+      - is_primary
+      - original_filename
+      - parse_error
+      - parsed_at
+      - size_bytes
+      - skill_count
+      - uploaded_at
+    ResumeUploadRequest:
+      type: object
+      properties:
+        file:
+          type: string
+          format: binary
+      required:
+      - file
+    RoleEnum:
+      enum:
+      - SEEKER
+      - RECRUITER
+      type: string
+      description: |-
+        * `SEEKER` - Job seeker
+        * `RECRUITER` - Recruiter
+    SeverityEnum:
+      enum:
+      - critical
+      - warning
+      - info
+      type: string
+      description: |-
+        * `critical` - critical
+        * `warning` - warning
+        * `info` - info
+    SkillGap:
+      type: object
+      properties:
+        skill:
+          type: string
+        importance:
+          type: number
+          format: double
+      required:
+      - importance
+      - skill
+    StatusEnum:
+      enum:
+      - SUBMITTED
+      - IN_REVIEW
+      - SHORTLISTED
+      - REJECTED
+      - ACCEPTED
+      type: string
+      description: |-
+        * `SUBMITTED` - Submitted
+        * `IN_REVIEW` - In review
+        * `SHORTLISTED` - Shortlisted
+        * `REJECTED` - Rejected
+        * `ACCEPTED` - Accepted
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    TokenRefreshRequest:
+      type: object
+      properties:
+        refresh:
+          type: string
+          minLength: 1
+      required:
+      - refresh
+    TokenVerifyRequest:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+          minLength: 1
+      required:
+      - token
+    UpdateProfile:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        recruiter_profile:
+          $ref: '#/components/schemas/RecruiterProfile'
+      required:
+      - email
+    UpdateProfileRequest:
+      type: object
+      properties:
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          minLength: 1
+          maxLength: 254
+        recruiter_profile:
+          $ref: '#/components/schemas/RecruiterProfileRequest'
+      required:
+      - email
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+        full_name:
+          type: string
+          readOnly: true
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+        recruiter_profile:
+          allOf:
+          - $ref: '#/components/schemas/RecruiterProfile'
+          readOnly: true
+      required:
+      - date_joined
+      - email
+      - full_name
+      - id
+      - recruiter_profile
+      - role
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

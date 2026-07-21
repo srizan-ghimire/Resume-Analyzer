@@ -1,24 +1,28 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework.routers import DefaultRouter
+from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
+
 from . import views
-from django.conf import settings
-from django.conf.urls.static import static
+
+router = DefaultRouter()
+router.register("jobs", views.JobViewSet, basename="job")
+router.register("applications", views.ApplicationViewSet, basename="application")
+router.register("resumes", views.ResumeViewSet, basename="resume")
+
+auth_patterns = [
+    path("register/", views.RegisterView.as_view(), name="register"),
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+    path("refresh/", TokenRefreshView.as_view(), name="token-refresh"),
+    path("verify/", TokenVerifyView.as_view(), name="token-verify"),
+    path("me/", views.MeView.as_view(), name="me"),
+    path("change-password/", views.ChangePasswordView.as_view(), name="change-password"),
+]
+
 urlpatterns = [
-    path('home/',views.home,name="home"),
-    path('register/',views.register_user,name="register"),
-    path('login/',views.login,name="login"),
-    path('logout/',views.logout,name="logout"),
-    path('file/',views.file_upload,name="file_upload"),
-    path('recommend/<str:username>/',views.recommend_jobs,name='recommend'),
-    path('ats/',views.ats_score_computation,name='ats'),
-    path('apply_job/<int:id>',views.apply_job,name='apply'),
-    path('applied_jobs/',views.applied_job,name='applied'),
-    #for recruiter
-    path('recruiter_login/',views.recruiter_login,name='recruiterLogin'),
-    path('recruiter_logout/',views.recruiter_logout,name='recruiterLogout'),
-    path('recruiter_register/',views.recruiter_register,name='recruiterRegister'),
-    path('job/',views.job,name='job'),
-    path('job/<int:id>/',views.get_job,name="getjob"),
-    path('applyfeaturedjob/',views.recommend_save_job,name="applyfeaturejob"),
-    path('status/',views.recruiter_update_status,name='status'),
-    
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path("auth/", include(auth_patterns)),
+    path("recommendations/", views.RecommendationView.as_view(), name="recommendations"),
+    path("ats-report/", views.AtsReportView.as_view(), name="ats-report"),
+    path("health/", views.HealthView.as_view(), name="health"),
+    path("", include(router.urls)),
+]
