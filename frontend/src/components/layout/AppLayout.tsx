@@ -44,7 +44,7 @@ export function AppLayout() {
   return (
     <div className={cn(
       "min-h-dvh bg-[var(--surface)]",
-      isRecruiter ? "bg-pattern-divide" : "bg-pattern-plus"
+      "bg-pattern-dots"
     )}>
       <a href="#main" className="sr-only-focusable">
         Skip to main content
